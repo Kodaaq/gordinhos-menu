@@ -1,47 +1,38 @@
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-local replicatedStorage = game:GetService("ReplicatedStorage")
+-- Painel de Controle (LocalScript dentro de StarterGui)
+local player = game.Players.LocalPlayer
+local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+gui.Name = "PainelGUI"
 
-function teleportTo(position)
-    if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-        player.Character.HumanoidRootPart.CFrame = CFrame.new(position)
-    end
+-- Função para criar botões
+local function criarBotao(texto, posY, callback)
+	local botao = Instance.new("TextButton")
+	botao.Size = UDim2.new(0, 200, 0, 40)
+	botao.Position = UDim2.new(0, 10, 0, posY)
+	botao.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+	botao.TextColor3 = Color3.fromRGB(255, 255, 255)
+	botao.Text = texto
+	botao.Parent = gui
+
+	botao.MouseButton1Click:Connect(callback)
 end
 
-for level = 1, 2650 do
-    print("Subindo para o nível:", level)
-    wait(0.1) -- Simula delay de ação
-
-    -- Simula obtenção de estilo de luta
-    if level == 150 then
-        print("Estilo de Luta: Black Leg desbloqueado.")
-    elseif level == 350 then
-        print("Estilo de Luta: Electro desbloqueado.")
-    elseif level == 800 then
-        print("Estilo de Luta: Dragon Claw desbloqueado.")
-    end
-
-    -- Simula obtenção de espada
-    if level == 200 then
-        print("Espada: Katana desbloqueada.")
-    elseif level == 600 then
-        print("Espada: Saber desbloqueada.")
-    end
-
-    -- Simula teleport e ataque em Pre Historic Island
-    if level == 1000 then
-        print("Indo para Pre Historic Island...")
-        teleportTo(Vector3.new(999, 300, -1500)) -- Coordenada fictícia
-
-        print("Atacando todos os NPCs... [Simulado]")
-        print("Tampando o vulcão... [Simulado]")
-        print("Pegando itens especiais... [Simulado]")
-    end
-
-    -- Simula desbloqueio do Haki V2
-    if level == 2000 then
-        print("Haki V2 desbloqueado.")
-    end
+-- Funções simuladas
+local function autoFarm()
+	print("AutoFarm Ativado: Atacando NPCs...")
 end
 
-print("Todos os objetivos concluídos até o nível 2650!")
+local function teleportar()
+	if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+		player.Character.HumanoidRootPart.CFrame = CFrame.new(Vector3.new(1000, 100, -1500))
+		print("Teleportado para Pre Historic Island!")
+	end
+end
+
+local function desbloquearHaki()
+	print("Haki V2 desbloqueado!")
+end
+
+-- Criar botões
+criarBotao("Ativar AutoFarm", 50, autoFarm)
+criarBotao("Teleportar para Ilha", 100, teleportar)
+criarBotao("Desbloquear Haki V2", 150, desbloquearHaki)
